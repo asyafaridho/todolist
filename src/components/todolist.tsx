@@ -24,9 +24,7 @@ type Task = {
 
 export default function TodoList() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [timeRemaining, setTimeRemaining] = useState<{ [key: string]: string }>(
-    {}
-  );
+  const [timeRemaining, setTimeRemaining] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -79,13 +77,13 @@ export default function TodoList() {
           <input id="swal-input2" type="datetime-local" class="swal2-input" />
         </div>
       `,
-      background: '#222222',
-      color: '#10b981',
+      background: '#f0fdf4',
+      color: '#064e3b',
       icon: 'info',
       iconColor: '#34d399',
       showCancelButton: true,
-      confirmButtonColor: '#10b981',
-      cancelButtonColor: '#f87171',
+      confirmButtonColor: '#86efac',
+      cancelButtonColor: '#fca5a5',
       confirmButtonText: '✨ Tambah',
       cancelButtonText: 'Batal',
       customClass: {
@@ -135,13 +133,13 @@ export default function TodoList() {
           <input id="swal-input2" type="datetime-local" class="swal2-input" value="${task.deadline}" />
         </div>
       `,
-      background: '#222222',
-      color: '#10b981',
+      background: '#f0fdf4',
+      color: '#064e3b',
       icon: 'info',
       iconColor: '#34d399',
       showCancelButton: true,
-      confirmButtonColor: '#10b981',
-      cancelButtonColor: '#f87171',
+      confirmButtonColor: '#86efac',
+      cancelButtonColor: '#fca5a5',
       confirmButtonText: '✨ Simpan',
       cancelButtonText: 'Batal',
       customClass: {
@@ -188,15 +186,15 @@ export default function TodoList() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-green-800 to-black flex items-center justify-center py-12 px-4">
-      <div className="w-full max-w-lg p-6 rounded-xl shadow-2xl bg-black/90 backdrop-blur-md border border-green-500">
-        <h1 className="text-3xl text-green-400 font-extrabold mb-6 text-center drop-shadow-lg">
+    <div className="min-h-screen w-full bg-gradient-to-br from-green-100 via-emerald-100 to-white flex items-center justify-center py-12 px-4">
+      <div className="w-full max-w-lg p-6 rounded-xl shadow-xl bg-white border border-emerald-200">
+        <h1 className="text-3xl text-emerald-600 font-extrabold mb-6 text-center drop-shadow-sm">
           🌿 To-Do List
         </h1>
         <div className="flex justify-center mb-6">
           <button
             onClick={addTask}
-            className="bg-green-600 hover:bg-green-700 transition-all duration-200 text-white px-6 py-2 rounded-full shadow-md"
+            className="bg-emerald-300 hover:bg-emerald-400 text-gray-800 transition-all duration-200 px-6 py-2 rounded-full shadow"
           >
             + Tambah Tugas
           </button>
@@ -205,12 +203,12 @@ export default function TodoList() {
           <AnimatePresence>
             {tasks.map((task) => {
               const timeLeft = calculateTimeRemaining(task.deadline);
-              const isExpired = timeLeft === 'Waktu habis!'
+              const isExpired = timeLeft === 'Waktu habis!';
               const taskColor = task.completed
-                ? 'bg-green-100'
+                ? 'bg-emerald-100'
                 : isExpired
-                ? 'bg-red-100'
-                : 'bg-yellow-100';
+                ? 'bg-rose-100'
+                : 'bg-yellow-50';
 
               return (
                 <motion.li
@@ -227,7 +225,7 @@ export default function TodoList() {
                       className={`cursor-pointer ${
                         task.completed
                           ? 'line-through text-gray-400'
-                          : 'text-gray-800 font-medium'
+                          : 'text-gray-700 font-medium'
                       }`}
                     >
                       {task.completed ? '✅ ' : '📌 '}
@@ -237,7 +235,7 @@ export default function TodoList() {
                   <div className="flex justify-between items-center">
                     <span
                       className={`text-sm ${
-                        isExpired ? 'text-red-600' : 'text-gray-500'
+                        isExpired ? 'text-rose-500' : 'text-gray-500'
                       }`}
                     >
                       {timeRemaining[task.id] || 'Belum ada deadline'}
@@ -249,21 +247,21 @@ export default function TodoList() {
                   <div className="flex gap-2 mt-4">
                     <button
                       onClick={() => editTask(task)}
-                      className="text-xs text-white px-2 py-1 rounded bg-blue-500 hover:bg-blue-700 transition"
+                      className="text-xs text-gray-800 px-2 py-1 rounded bg-blue-200 hover:bg-blue-300 transition"
                     >
                       ✏️ Edit
                     </button>
                     {!task.completed && (
                       <button
                         onClick={() => markAsCompleted(task)}
-                        className="text-xs text-white px-2 py-1 rounded bg-green-500 hover:bg-green-700 transition"
+                        className="text-xs text-gray-800 px-2 py-1 rounded bg-emerald-200 hover:bg-emerald-300 transition"
                       >
                         ✅ Selesai
                       </button>
                     )}
                     <button
                       onClick={() => deleteTask(task.id)}
-                      className="text-xs text-white px-2 py-1 rounded bg-red-500 hover:bg-red-700 transition"
+                      className="text-xs text-gray-800 px-2 py-1 rounded bg-rose-200 hover:bg-rose-300 transition"
                     >
                       🗑️ Hapus
                     </button>
