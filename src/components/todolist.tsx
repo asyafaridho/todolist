@@ -29,11 +29,15 @@ export default function TodoList() {
   useEffect(() => {
     const fetchTasks = async () => {
       const querySnapshot = await getDocs(collection(db, 'tasks'));
-      const tasksData = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Task[];
-      setTasks(tasksData);
+      const tasksData = querySnapshot.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Task[];
+
+      // Hanya masukkan tugas yang belum selesai
+      const unfinishedTasks = tasksData.filter((task) => !task.completed);
+      setTasks(unfinishedTasks);
     };
     fetchTasks();
   }, []);
@@ -169,7 +173,17 @@ export default function TodoList() {
     const updatedTask = { ...task, completed: true };
     const taskRef = doc(db, 'tasks', task.id);
     await updateDoc(taskRef, updatedTask);
-    setTasks(tasks.map((t) => (t.id === task.id ? updatedTask : t)));
+
+    await MySwal.fire({
+      title: '🎉 Mantap!',
+      text: 'masih ada banyak tugas yang harus kamu selsaikan',
+      icon: 'success',
+      confirmButtonColor: '#86efac',
+      background: '#f0fdf4',
+      color: '#064e3b',
+    });
+
+    setTasks(tasks.filter((t) => t.id !== task.id));
   };
 
   const formatDate = (dateString: string): string => {
