@@ -34,8 +34,6 @@ export default function TodoList() {
           id: doc.id,
           ...doc.data(),
         })) as Task[];
-
-      // Hanya masukkan tugas yang belum selesai
       const unfinishedTasks = tasksData.filter((task) => !task.completed);
       setTasks(unfinishedTasks);
     };
@@ -94,14 +92,19 @@ export default function TodoList() {
         popup: 'rounded-xl shadow-lg',
       },
       preConfirm: () => {
-        return [
-          (document.getElementById('swal-input1') as HTMLInputElement)?.value,
-          (document.getElementById('swal-input2') as HTMLInputElement)?.value,
-        ];
+        const taskName = (document.getElementById('swal-input1') as HTMLInputElement)?.value;
+        const deadline = (document.getElementById('swal-input2') as HTMLInputElement)?.value;
+
+        if (!taskName || !deadline) {
+          Swal.showValidationMessage('Nama tugas dan tanggal harus diisi yaa');
+          return false;
+        }
+
+        return [taskName, deadline];
       },
     });
 
-    if (formValues && formValues[0] && formValues[1]) {
+    if (formValues) {
       const newTask: Omit<Task, 'id'> = {
         text: formValues[0],
         completed: false,
@@ -150,14 +153,19 @@ export default function TodoList() {
         popup: 'rounded-xl shadow-lg',
       },
       preConfirm: () => {
-        return [
-          (document.getElementById('swal-input1') as HTMLInputElement)?.value,
-          (document.getElementById('swal-input2') as HTMLInputElement)?.value,
-        ];
+        const taskName = (document.getElementById('swal-input1') as HTMLInputElement)?.value;
+        const deadline = (document.getElementById('swal-input2') as HTMLInputElement)?.value;
+
+        if (!taskName || !deadline) {
+          Swal.showValidationMessage('Nama tugas dan tanggal harus diisi yaa 😗');
+          return false;
+        }
+
+        return [taskName, deadline];
       },
     });
 
-    if (formValues && formValues[0] && formValues[1]) {
+    if (formValues) {
       const updatedTask: Omit<Task, 'id'> = {
         text: formValues[0],
         completed: task.completed,
