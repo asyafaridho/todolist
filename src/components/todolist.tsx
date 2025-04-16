@@ -157,7 +157,7 @@ export default function TodoList() {
         const deadline = (document.getElementById('swal-input2') as HTMLInputElement)?.value;
 
         if (!taskName || !deadline) {
-          Swal.showValidationMessage('Nama tugas dan tanggal harus diisi yaa 😗');
+          Swal.showValidationMessage('Nama tugas dan tanggal harus diisi yaa ');
           return false;
         }
 
@@ -184,7 +184,7 @@ export default function TodoList() {
 
     await MySwal.fire({
       title: '🎉 Mantap!',
-      text: 'masih ada banyak tugas yang harus kamu selsaikan',
+      text: 'semangat terus ya buat jadi konsisten',
       icon: 'success',
       confirmButtonColor: '#86efac',
       background: '#f0fdf4',
